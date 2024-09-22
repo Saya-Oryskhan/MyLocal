@@ -1,0 +1,62 @@
+<!doctype html>
+    {% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+
+
+    <title>{% block title %}Kooky{% endblock %}</title>
+  </head>
+  <body  class="{% if request.COOKIES.theme == 'dark' %}dark-mode{% endif %}">
+
+        <div class="window"> 
+        <nav>
+    <div id="logo">
+        <a href="/"><img src="{% static 'logo.png' %}"></a>
+    </div>
+    <div class="nav-links" id="navLinks">
+        <ul>
+          <li><a href="{% url 'recipes' %}">RecIpEs <span class="sr-only">(current)</span></a></li>
+            <li><a href="">ReViEwS</a></li>
+            <li><a href="/login/">LoG iN</a></li>
+            {% if request.COOKIES.theme == 'dark' %}
+            <li><a id="theme-switch" href="">l MODE</a></li>
+            {% else %}
+            <li style="border-left: 1px solid white;"><a id="theme-switch" href="">d MODE</a></li>
+            {% endif %}
+            <li style="border: 1px solid white;"><a id = "exc" href="{% url 'services' %}">SeRvIcEs</a></li>
+        </ul>
+        <br>
+        <hr style="height: 100%;">
+    </div>
+
+  
+</nav>        <div class="container-fluid">
+        {% block content %}
+            Kooky
+        {% endblock %}
+        </div>
+  <footer class="page-footer font-small blue">
+    <div class="footer-copyright text-center py-3">© 2023 Copyright:
+      <a href="{% url 'home' %}"> SDU Publications</a>
+      <p>Website by: SDU/back end class</p>
+      <p>Contact information: <a href="mailto:email@example.com">email@stu.sdu.edu.kz</a></p>
+    </div>
+  </footer>
+</div>
+
+<script>
+  var themeSwitch = document.getElementById('theme-switch');
+  themeSwitch.onclick = function() {
+    var theme = document.body.classList.contains('light') ? 'dark' : 'dark';
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '/set-theme/?theme=' + theme);
+    xhr.send();
+    document.body.classList.toggle('dark');
+    themeSwitch.innerHTML = theme == 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+  };
+</script>
+  </body>
+</html>
